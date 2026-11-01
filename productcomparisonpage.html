@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Furniro - Product Comparison</title>
+    <!-- Google Fonts: Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* --- RESET & GLOBAL STYLES --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            color: #000000;
+            background-color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        .container {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* --- HEADER NAVBAR --- */
+        .header {
+            width: 100%;
+            height: 80px;
+            background-color: #ffffff;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+        }
+
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 100%;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 28px;
+            font-weight: 700;
+            color: #000000;
+        }
+
+        .logo svg {
+            width: 40px;
+            height: 32px;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 40px;
+        }
+
+        .nav-link {
+            font-size: 16px;
+            font-weight: 500;
+            color: #000000;
+            transition: color 0.2s ease;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: #B88E2F;
+        }
+
+        .header-icons {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+            font-size: 20px;
+            color: #000000;
+        }
+
+        .header-icons a:hover {
+            color: #B88E2F;
+        }
+
+        /* --- HERO BANNER --- */
+        .hero-banner {
+            position: relative;
+            width: 100%;
+            height: 316px;
+            background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), 
+                        url('https://images.unsplash.com/photo-1618221195710-dd6b41faAEA6?q=80&w=1600&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            backdrop-filter: blur(4px);
+            margin-bottom: 60px;
+        }
+
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .hero-title {
+            font-size: 48px;
+            font-weight: 500;
+            color: #000000;
+            margin-bottom: 2px;
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 16px;
+        }
+
+        .breadcrumb-item-active {
+            font-weight: 600;
+            color: #000000;
+        }
+
+        .breadcrumb-separator {
+            font-size: 12px;
+            color: #000000;
+        }
+
+        .breadcrumb-item {
+            color: #555555;
+            font-weight: 300;
+        }
+
+        /* --- PRODUCT COMPARISON SECTION --- */
+        .comparison-top {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 30px;
+            align-items: start;
+            margin-bottom: 50px;
+        }
+
+        .go-to-product h3 {
+            font-size: 28px;
+            font-weight: 500;
+            line-height: 1.3;
+            margin-bottom: 16px;
+        }
+
+        .go-to-product a {
+            font-size: 20px;
+            color: #727272;
+            text-decoration: underline;
+            font-weight: 500;
+        }
+
+        .product-card-compare {
+            background-color: #F9F1E7;
+            border-radius: 10px;
+            padding: 16px;
+        }
+
+        .product-card-compare img {
+            width: 100%;
+            height: 170px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 12px;
+        }
+
+        .product-card-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .product-card-price {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .rating-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 14px;
+        }
+
+        .stars {
+            color: #FFC700;
+        }
+
+        .review-count {
+            color: #9F9F9F;
+            font-size: 12px;
+            border-left: 1px solid #9F9F9F;
+            padding-left: 6px;
+        }
+
+        .add-product-box h3 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 24px;
+        }
+
+        .btn-choose-product {
+            width: 100%;
+            height: 50px;
+            background-color: #B88E2F;
+            color: #ffffff;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 16px;
+            cursor: pointer;
+        }
+
+        /* --- TABLE SPECIFICATIONS --- */
+        .comparison-table-wrap {
+            border-top: 1px solid #E8E8E8;
+            padding-top: 40px;
+            margin-bottom: 80px;
+        }
+
+        .table-section-title {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 24px;
+        }
+
+        .spec-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .spec-table td {
+            padding: 14px 10px;
+            font-size: 16px;
+            vertical-align: top;
+            line-height: 1.5;
+        }
+
+        .spec-table tr td:first-child {
+            width: 25%;
+            font-weight: 400;
+            color: #000000;
+        }
+
+        .spec-table tr td:nth-child(2),
+        .spec-table tr td:nth-child(3) {
+            width: 28%;
+            color: #000000;
+        }
+
+        .spec-table tr td:last-child {
+            width: 19%;
+        }
+
+        .btn-add-cart-spec {
+            width: 180px;
+            height: 50px;
+            background-color: #B88E2F;
+            color: #ffffff;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 400;
+            cursor: pointer;
+            transition: opacity 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-add-cart-spec:hover {
+            opacity: 0.9;
+        }
+
+        /* --- FEATURES BENEFIT BAR --- */
+        .features-bar {
+            background-color: #FAF3EA;
+            padding: 80px 0;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .feature-icon {
+            font-size: 52px;
+            color: #242424;
+        }
+
+        .feature-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #242424;
+            margin-bottom: 2px;
+        }
+
+        .feature-desc {
+            font-size: 15px;
+            font-weight: 500;
+            color: #898989;
+        }
+
+        /* --- FOOTER --- */
+        .footer {
+            background-color: #ffffff;
+            padding-top: 80px;
+            padding-bottom: 30px;
+            border-top: 1px solid #D9D9D9;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 2fr;
+            gap: 40px;
+            padding-bottom: 48px;
+            border-bottom: 1px solid #D9D9D9;
+        }
+
+        .footer-brand-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #000000;
+            margin-bottom: 36px;
+        }
+
+        .footer-address {
+            font-size: 16px;
+            font-weight: 400;
+            color: #9F9F9F;
+            line-height: 1.6;
+        }
+
+        .footer-heading {
+            font-size: 16px;
+            font-weight: 500;
+            color: #9F9F9F;
+            margin-bottom: 36px;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .footer-link {
+            font-size: 16px;
+            font-weight: 500;
+            color: #000000;
+            transition: color 0.2s;
+        }
+
+        .footer-link:hover {
+            color: #B88E2F;
+        }
+
+        .newsletter-form {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .newsletter-input {
+            border: none;
+            border-bottom: 1px solid #000000;
+            padding-bottom: 4px;
+            font-size: 14px;
+            color: #000000;
+            outline: none;
+            width: 220px;
+        }
+
+        .newsletter-input::placeholder {
+            color: #9F9F9F;
+        }
+
+        .newsletter-btn {
+            background: none;
+            border: none;
+            border-bottom: 1px solid #000000;
+            padding-bottom: 4px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #000000;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: color 0.2s;
+        }
+
+        .newsletter-btn:hover {
+            color: #B88E2F;
+        }
+
+        .footer-bottom {
+            padding-top: 36px;
+        }
+
+        .copyright-text {
+            font-size: 16px;
+            color: #000000;
+            font-weight: 400;
+        }
+
+        /* --- RESPONSIVE MEDIA QUERIES --- */
+        @media (max-width: 1024px) {
+            .comparison-top {
+                grid-template-columns: 1fr 1fr;
+            }
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 40px;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .comparison-top {
+                grid-template-columns: 1fr;
+            }
+            .nav-menu {
+                display: none;
+            }
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="header">
+        <div class="container header-container">
+            <a href="homepage.html" class="logo">
+                <svg viewBox="0 0 50 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <polygon points="25,5 45,35 5,35" fill="#B88E2F" />
+                    <polygon points="25,12 38,32 12,32" fill="#EEDC9A" />
+                </svg>
+                <span>Furniro</span>
+            </a>
+
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="shop.html" class="nav-link">Shop</a>
+                <a href="#" class="nav-link">About</a>
+                <a href="contactuspage.html" class="nav-link">Contact</a>
+            </nav>
+
+            <div class="header-icons">
+                <a href="#" title="Account"><i class="fa-regular fa-user"></i></a>
+                <a href="#" title="Search"><i class="fa-solid fa-magnifying-glass"></i></a>
+                <a href="#" title="Wishlist"><i class="fa-regular fa-heart"></i></a>
+                <a href="checkout.html" title="Cart"><i class="fa-solid fa-cart-shopping"></i></a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Banner -->
+    <section class="hero-banner">
+        <div class="hero-content">
+            <div class="hero-logo-icon">
+                <svg width="32" height="32" viewBox="0 0 50 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <polygon points="25,5 45,35 5,35" fill="#B88E2F" />
+                </svg>
+            </div>
+            <h1 class="hero-title">Product Comparison</h1>
+            <div class="breadcrumb">
+                <a href="homepage.html" class="breadcrumb-item-active">Home</a>
+                <i class="fa-solid fa-chevron-right breadcrumb-separator"></i>
+                <span class="breadcrumb-item">Comparison</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Comparison Section -->
+    <section class="container">
+        
+        <!-- Top Products Header -->
+        <div class="comparison-top">
+            <div class="go-to-product">
+                <h3>Go to Product page for more Products</h3>
+                <a href="shop.html">View More</a>
+            </div>
+
+            <div class="product-card-compare">
+                <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?q=80&w=500&auto=format&fit=crop" alt="Asgaard Sofa">
+                <h4 class="product-card-title">Asgaard Sofa</h4>
+                <div class="product-card-price">Rs. 250,000.00</div>
+                <div class="rating-row">
+                    <span>4.7</span>
+                    <div class="stars">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i>
+                    </div>
+                    <span class="review-count">204 Review</span>
+                </div>
+            </div>
+
+            <div class="product-card-compare">
+                <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=500&auto=format&fit=crop" alt="Outdoor Sofa Set">
+                <h4 class="product-card-title">Outdoor Sofa Set</h4>
+                <div class="product-card-price">Rs. 224,000.00</div>
+                <div class="rating-row">
+                    <span>4.2</span>
+                    <div class="stars">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i>
+                    </div>
+                    <span class="review-count">145 Review</span>
+                </div>
+            </div>
+
+            <div class="add-product-box">
+                <h3>Add A Product</h3>
+                <button class="btn-choose-product">
+                    Choose a Product <i class="fa-solid fa-chevron-down"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Detailed Specifications Table -->
+        <div class="comparison-table-wrap">
+            
+            <!-- General Section -->
+            <h3 class="table-section-title">General</h3>
+            <table class="spec-table">
+                <tr>
+                    <td>Sales Package</td>
+                    <td>1 sectional sofa</td>
+                    <td>1 Three Seater, 2 Single Seater</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Model Number</td>
+                    <td>TFCBLIGRBL6SRHS</td>
+                    <td>DTUBLIGRBL568</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Secondary Material</td>
+                    <td>Solid Wood</td>
+                    <td>Solid Wood</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Configuration</td>
+                    <td>L-shaped</td>
+                    <td>L-shaped</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Upholstery Material</td>
+                    <td>Fabric + Cotton</td>
+                    <td>Fabric + Cotton</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Upholstery Color</td>
+                    <td>Bright Grey & Lion</td>
+                    <td>Bright Grey & Lion</td>
+                    <td></td>
+                </tr>
+            </table>
+
+            <!-- Product Section -->
+            <h3 class="table-section-title" style="margin-top: 40px;">Product</h3>
+            <table class="spec-table">
+                <tr>
+                    <td>Filling Material</td>
+                    <td>Foam</td>
+                    <td>Matte</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Finish Type</td>
+                    <td>Bright Grey & Lion</td>
+                    <td>Bright Grey & Lion</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Adjustable Headrest</td>
+                    <td>No</td>
+                    <td>Yes</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Maximum Load Capacity</td>
+                    <td>280 KG</td>
+                    <td>300 KG</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Origin of Manufacture</td>
+                    <td>India</td>
+                    <td>India</td>
+                    <td></td>
+                </tr>
+            </table>
+
+            <!-- Dimensions Section -->
+            <h3 class="table-section-title" style="margin-top: 40px;">Dimensions</h3>
+            <table class="spec-table">
+                <tr>
+                    <td>Width</td>
+                    <td>265.32 cm</td>
+                    <td>265.32 cm</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Height</td>
+                    <td>76 cm</td>
+                    <td>76 cm</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Depth</td>
+                    <td>167.76 cm</td>
+                    <td>167.76 cm</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Weight</td>
+                    <td>45 KG</td>
+                    <td>65 KG</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Seat Height</td>
+                    <td>41.52 cm</td>
+                    <td>41.52 cm</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Leg Height</td>
+                    <td>5.46 cm</td>
+                    <td>5.46 cm</td>
+                    <td></td>
+                </tr>
+            </table>
+
+            <!-- Warranty Section -->
+            <h3 class="table-section-title" style="margin-top: 40px;">Warranty</h3>
+            <table class="spec-table">
+                <tr>
+                    <td>Warranty Summary</td>
+                    <td>1 Year Manufacturing Warranty</td>
+                    <td>1.2 Year Manufacturing Warranty</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Warranty Service Type</td>
+                    <td>For Warranty Claims or Any Product Related Issues Please Email at operations@trevifurniture.com</td>
+                    <td>For Warranty Claims or Any Product Related Issues Please Email at support@xyz.com</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Covered in Warranty</td>
+                    <td>Warranty Against Manufacturing Defect</td>
+                    <td>Warranty of the product is limited to manufacturing defects only.</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Not Covered in Warranty</td>
+                    <td>The Warranty Does Not Cover Damages Due To Usage Of The Product Beyond Its Intended Use And Wear & Tear In The Natural Course Of Product Usage.</td>
+                    <td>The Warranty Does Not Cover Damages Due To Usage Of The Product Beyond Its Intended Use And Wear & Tear In The Natural Course Of Product Usage.</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Domestic Warranty</td>
+                    <td>1 Year</td>
+                    <td>3 Months</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><a href="checkout.html" class="btn-add-cart-spec">Add To Cart</a></td>
+                    <td><a href="checkout.html" class="btn-add-cart-spec">Add To Cart</a></td>
+                    <td></td>
+                </tr>
+            </table>
+
+        </div>
+    </section>
+
+    <!-- Features Benefit Bar -->
+    <section class="features-bar">
+        <div class="container">
+            <div class="features-grid">
+                <div class="feature-item">
+                    <i class="fa-solid fa-trophy feature-icon"></i>
+                    <div>
+                        <h4 class="feature-title">High Quality</h4>
+                        <p class="feature-desc">crafted from top materials</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <i class="fa-solid fa-shield-check feature-icon"></i>
+                    <div>
+                        <h4 class="feature-title">Warranty Protection</h4>
+                        <p class="feature-desc">Over 2 years</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <i class="fa-solid fa-shipping-fast feature-icon"></i>
+                    <div>
+                        <h4 class="feature-title">Free Shipping</h4>
+                        <p class="feature-desc">Order over 150 $</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <i class="fa-solid fa-headset feature-icon"></i>
+                    <div>
+                        <h4 class="feature-title">24 / 7 Support</h4>
+                        <p class="feature-desc">Dedicated support</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <h3 class="footer-brand-title">Funiro.</h3>
+                    <p class="footer-address">
+                        400 University Drive Suite 200 Coral Gables,<br>
+                        FL 33134 USA
+                    </p>
+                </div>
+                <div>
+                    <h5 class="footer-heading">Links</h5>
+                    <ul class="footer-links">
+                        <li><a href="index.html" class="footer-link">Home</a></li>
+                        <li><a href="shop.html" class="footer-link">Shop</a></li>
+                        <li><a href="#" class="footer-link">About</a></li>
+                        <li><a href="contactuspage.html" class="footer-link">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="footer-heading">Help</h5>
+                    <ul class="footer-links">
+                        <li><a href="#" class="footer-link">Payment Options</a></li>
+                        <li><a href="#" class="footer-link">Returns</a></li>
+                        <li><a href="#" class="footer-link">Privacy Policies</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="footer-heading">Newsletter</h5>
+                    <form class="newsletter-form" onsubmit="event.preventDefault();">
+                        <input type="email" placeholder="Enter Your Email Address" class="newsletter-input">
+                        <button type="submit" class="newsletter-btn">SUBSCRIBE</button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="copyright-text">2023 furniro. All rights reserved</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
